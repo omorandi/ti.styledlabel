@@ -44,8 +44,16 @@ public class CustomImageGetter implements Html.ImageGetter {
 		} else {
 			d = retrieveLocalDrawable(url);
 		}
-		if (d != null)
+
+		if (d != null) {
+			DisplayMetrics metrics = new DisplayMetrics();
+			_proxy.getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+			int density  =  metrics.densityDpi;
+			((BitmapDrawable)d).setTargetDensity(density);
 			d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+		}
+
 		return d;
 	}
 
